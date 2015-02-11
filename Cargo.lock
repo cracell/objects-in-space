@@ -1,5 +1,5 @@
 [root]
-name = "getting-started"
+name = "objects-in-space"
 version = "0.0.0"
 dependencies = [
  "piston 0.0.5 (git+https://github.com/PistonDevelopers/piston.git)",

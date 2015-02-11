@@ -1,10 +1,9 @@
 [package]
 
-name = "getting-started"
+name = "objects-in-space"
 version = "0.0.0"
 authors = [
-    "TyOverby <ty@pre-alpha.com>",
-    "Nikita Pekin <contact@nikitapek.in>"
+    "Eric Cranston <cracell@gmail.com>"
 ]
 
 [[bin]]
