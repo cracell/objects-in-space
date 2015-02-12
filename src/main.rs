@@ -49,8 +49,6 @@ impl App {
             .rot_rad(self.rotation)
             .trans(-25.0, -25.0);
         Rectangle::new([1.0, 0.0, 0.0, 1.0]).draw([self.player.x, self.player.y, 100.0, 50.0], center_context, &mut self.gl);
-        // Rectangle::new([1.0, 0.5, 0.0, 1.0]).draw([110.0, 0.0, 100.0, 50.0], center_context, &mut self.gl);
-        // Rectangle::new([1.0, 0.5, 1.0, 0.5]).draw([50.0, 0.0, 70.0, 50.0], center_context, &mut self.gl);
     }
 
     fn update(&mut self, _: &mut Window, args: &UpdateArgs) {
@@ -117,27 +115,4 @@ fn main() {
             app.update(&mut *window.borrow_mut(), &u);
         }
     }
-
-    // let window = RefCell::new(window);
-    // for e in piston::events(&window) {
-        // use piston::event::{ PressEvent };
-        // println!("Hello, world.");
-
-        // if let Some(button) = e.press_args() {
-            // use piston::input::Button::Keyboard;
-            // use piston::input::keyboard::Key;
-
-            // if button == Keyboard(Key::G) {
-                // app.player.y -= 10.0
-            // }
-
-        // }
-    // }
 }
-
-// fn handleKey(key: Button, app: &mut APP) {
-    // match key {
-        // Keyboard(input::keyboard::Up) => { app.player.y -= 10.0 }
-        // _ => {}
-    // }
-// }
