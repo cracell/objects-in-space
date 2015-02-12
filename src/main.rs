@@ -33,7 +33,8 @@ pub struct App {
 pub struct Player {
     x: f64,
     y: f64,
-    y_v: bool
+    y_v: f64,
+    x_v: f64 
 }
 
 impl App {
@@ -41,7 +42,7 @@ impl App {
         // Set up a context to draw into.
         let context = &Context::abs(args.width as f64, args.height as f64);
         // Clear the screen
-        graphics::clear([0.0,1.0,0.0,1.0], &mut self.gl);
+        graphics::clear([0.0,0.0,0.0,1.0], &mut self.gl);
 
         // Draw a box rotating around the middle of the screen.
         let center_context = &context.trans((args.width / 2) as f64, (args.height / 2 ) as f64)
@@ -55,18 +56,13 @@ impl App {
     fn update(&mut self, _: &mut Window, args: &UpdateArgs) {
         // Rotate 2 radians per second.
         // self.rotation += 2.0 * args.dt;
-        if self.player.y_v {
-            self.player.y -= 0.1
-        }
+        self.player.y += self.player.y_v;
+        self.player.x += self.player.x_v;
     }
 }
 
 fn main() {
     // Create an SDL window.
-    // let window = Window::new(
-      // _3_2,
-      // window::WindowSettings::default()
-          // );
     let window = Window::new(
       _3_2,
       window::WindowSettings {
@@ -78,7 +74,7 @@ fn main() {
      }
           );
 
-    let mut player = Player { x: 0.0, y: 0.0, y_v: false };
+    let mut player = Player { x: 0.0, y: 0.0, y_v: 0.0, x_v: 0.0 };
 
     // Create a new game and run it.
     let mut app = App { gl: Gl::new(_3_2), rotation: 0.0, player: player };
@@ -91,8 +87,16 @@ fn main() {
             use piston::input::Button::Keyboard;
             use piston::input::keyboard::Key;
 
+            let velocity = 0.4;
+
             if button == Keyboard(Key::Up) {
-                app.player.y_v = true
+                app.player.y_v = -velocity
+            } else if button == Keyboard(Key::Down) {
+                app.player.y_v = velocity
+            } else if button == Keyboard(Key::Left) {
+                app.player.x_v = -velocity
+            } else if button == Keyboard(Key::Right) {
+                app.player.x_v = velocity
             }
 
         }
@@ -100,10 +104,11 @@ fn main() {
             use piston::input::Button::Keyboard;
             use piston::input::keyboard::Key;
 
-            if button == Keyboard(Key::Up) {
-                app.player.y_v = false 
+            if button == Keyboard(Key::Up) || button == Keyboard(Key::Down) {
+                app.player.y_v = 0.0
+            } else if button == Keyboard(Key::Left) || button == Keyboard(Key::Right) {
+                app.player.x_v = 0.0
             }
-
         }
         if let Some(r) = e.render_args() {
             app.render(&mut *window.borrow_mut(), &r);
