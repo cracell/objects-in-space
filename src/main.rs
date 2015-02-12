@@ -72,7 +72,7 @@ fn main() {
      }
           );
 
-    let mut player = Player { x: 0.0, y: 0.0, y_v: 0.0, x_v: 0.0 };
+    let player = Player { x: 0.0, y: 0.0, y_v: 0.0, x_v: 0.0 };
 
     // Create a new game and run it.
     let mut app = App { gl: Gl::new(_3_2), rotation: 0.0, player: player };
@@ -80,21 +80,20 @@ fn main() {
     let window = RefCell::new(window);
     for e in event::events(&window) {
         use piston::event::{ PressEvent, ReleaseEvent };
+        use piston::input::Button::Keyboard;
+        use piston::input::keyboard::Key;
+        
 
         if let Some(button) = e.press_args() {
-            use piston::input::Button::Keyboard;
-            use piston::input::keyboard::Key;
 
-            let velocity = 0.4;
+            let velocity = 0.7;
 
-            if button == Keyboard(Key::Up) {
-                app.player.y_v = -velocity
-            } else if button == Keyboard(Key::Down) {
-                app.player.y_v = velocity
-            } else if button == Keyboard(Key::Left) {
-                app.player.x_v = -velocity
-            } else if button == Keyboard(Key::Right) {
-                app.player.x_v = velocity
+            match button { 
+                Keyboard(Key::Up) | Keyboard(Key::W) => app.player.y_v = -velocity,
+                Keyboard(Key::Down) | Keyboard(Key::S) => app.player.y_v = velocity,
+                Keyboard(Key::Left) | Keyboard(Key::A) => app.player.x_v = -velocity,
+                Keyboard(Key::Right) | Keyboard(Key::D) => app.player.x_v = velocity,
+                _ => () 
             }
 
         }
