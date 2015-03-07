@@ -48,7 +48,8 @@ impl App {
         let center_context = &context.trans((args.width / 2) as f64, (args.height / 2 ) as f64)
             .rot_rad(self.rotation)
             .trans(-25.0, -25.0);
-        Rectangle::new([1.0, 0.0, 0.0, 1.0]).draw([self.player.x, self.player.y, 100.0, 50.0], center_context, &mut self.gl);
+        self.render_ship(&center_context, args);
+        Rectangle::new([1.0, 0.0, 0.0, 1.0]).draw([self.player.x, self.player.y, 50.0, 50.0], center_context, &mut self.gl);
     }
 
     fn update(&mut self, _: &mut Window, args: &UpdateArgs) {
@@ -56,6 +57,10 @@ impl App {
         // self.rotation += 2.0 * args.dt;
         self.player.y += self.player.y_v;
         self.player.x += self.player.x_v;
+    }
+
+    fn render_ship(&mut self, center_context: &Context, args: &RenderArgs) {
+        Rectangle::new([1.0, 1.0, 1.0, 1.0]).draw([-250.0, -250.0, 500.0, 500.0], center_context, &mut self.gl);
     }
 }
 
@@ -65,7 +70,7 @@ fn main() {
       _3_2,
       window::WindowSettings {
           title: "Objects in Space".to_string(),
-          size: [500, 500],
+          size: [750, 750],
           fullscreen: false,
           exit_on_esc: true,
           samples: 4,
@@ -86,7 +91,7 @@ fn main() {
 
         if let Some(button) = e.press_args() {
 
-            let velocity = 0.7;
+            let velocity = 0.9;
 
             match button { 
                 Keyboard(Key::Up) | Keyboard(Key::W) => app.player.y_v = -velocity,
