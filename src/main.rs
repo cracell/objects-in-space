@@ -101,9 +101,11 @@ fn main() {
             use piston::input::Button::Keyboard;
             use piston::input::keyboard::Key;
 
-            if button == Keyboard(Key::Up) || button == Keyboard(Key::Down) {
+            if button == Keyboard(Key::Up) || button == Keyboard(Key::Down) || button ==
+                Keyboard(Key::W) || button == Keyboard(Key::S) {
                 app.player.y_v = 0.0
-            } else if button == Keyboard(Key::Left) || button == Keyboard(Key::Right) {
+            } else if button == Keyboard(Key::Left) || button == Keyboard(Key::Right) || 
+                button == Keyboard(Key::A) || button == Keyboard(Key::D) {
                 app.player.x_v = 0.0
             }
         }
